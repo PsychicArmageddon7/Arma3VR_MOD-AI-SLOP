@@ -113,11 +113,12 @@ Arma3VR/
 
 ## Building from Source
 
-### Prerequisites
-* **Visual Studio 2022** (with *Desktop development with C++*)
-* **CMake 3.20+**
+### Prerequisites (Required for BOTH Methods)
+* **Visual Studio 2022** with the **"Desktop development with C++"** workload checked (this installs the MSVC compiler, Windows 10/11 SDK with DirectX 11, and CMake tools).
 * **Arma 3 (64-bit)**
 * Any PBO packing tool (such as PBO Manager, Addon Builder, or HEMTT)
+
+> **Important:** Visual Studio 2022 must be installed on your computer even if you use the PowerShell script. The script is an automated build wrapper that calls Visual Studio's MSVC compiler and Windows SDK behind the scenes.
 
 ---
 
@@ -134,14 +135,15 @@ cd Arma3VR_MOD-AI-SLOP
 
 Choose either method below:
 
-* **Via Visual Studio 2022 (Recommended)**:  
+* **Method A — Via Visual Studio 2022 (GUI)**:  
   Open the repository folder using **File &rarr; Open &rarr; Folder...**, select **`x64-Release`** in the top configuration dropdown, and press **`Ctrl + Shift + B`** (or **Build &rarr; Build All**).
 
-* **Via PowerShell Script**:  
+* **Method B — Via PowerShell Script (CLI)**:  
   Open PowerShell in the repository root and run:
   ```powershell
   .\build.ps1 -Configuration Release
   ```
+  *(If Windows blocks the script from running due to execution policy, run: `powershell -ExecutionPolicy Bypass -File .\build.ps1 -Configuration Release`)*
 
 Either method compiles the C++ extension and writes **`Arma3VR_x64.dll`** directly into the local **`@Arma3VR/`** directory.
 
