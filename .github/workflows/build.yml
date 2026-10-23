@@ -31,15 +31,8 @@ jobs:
       run: |
         cmake --build build --config Release
 
-    - name: Package Release Mod Artifact
-      run: |
-        mkdir dist\@Arma3VR\addons\main -Force
-        copy build\Release\Arma3VR_x64.dll dist\@Arma3VR\
-        copy mod.cpp dist\@Arma3VR\
-        copy addons\main\* dist\@Arma3VR\addons\main\ -Recurse
-
-    - name: Upload Artifact
+    - name: Upload Mod Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: Arma3VR-x64-Release
-        path: dist/@Arma3VR
+        name: Arma3VR-Release
+        path: '@Arma3VR'
