@@ -160,9 +160,6 @@ Your `@Arma3VR` folder is now complete and ready to use:
 2. Go to the **MODS** tab &rarr; click **+ Local mod**.
 3. Select the **`@Arma3VR`** folder from your repository (or copy it into your game root first).
 4. Enable **Arma 3 VR (OpenXR)** in the mod list and launch the game.
-
-*(If you are creating a release archive for others, simply zip the completed `@Arma3VR` folder and attach it to a GitHub Release).*
-
 ---
 
 ## License
