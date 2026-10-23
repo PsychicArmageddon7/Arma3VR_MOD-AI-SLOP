@@ -91,42 +91,41 @@ Arma3VR/
 ├── LICENSE
 └── README.md
 ```
-Building & Modifying from Source
-Prerequisites
 
-    Visual Studio 2022 (with Desktop development with C++)
+## Building from Source
 
-    CMake 3.20+
+### Prerequisites
+* Visual Studio 2022 (with *Desktop development with C++*)
+* CMake 3.20+
+* Arma 3 (64-bit)
 
-    Arma 3 (64-bit)
+### Building the Extension DLL
 
-Building the Extension DLL
+1. Clone this repository:
+```powershell
+git clone https://github.com/PsychicArmageddon7/Arma3VR_MOD-AI-SLOP.git
+cd Arma3VR_MOD-AI-SLOP
 
-    Clone this repository:
-    code Powershell
+    Build via the PowerShell script:
 
-    git clone https://github.com/PsychicArmageddon7/Arma3VR_MOD-AI-SLOP.git
-    cd Arma3VR_MOD-AI-SLOP
+code Powershell
 
-    Build via the provided PowerShell script:
-    code Powershell
+.\build.ps1 -Configuration Release
 
-    .\build.ps1 -Configuration Release
+(Or open the folder directly in Visual Studio 2022 as a CMake project and build Arma3VR_x64)
 
-    Or open the folder directly in Visual Studio 2022 as a CMake project and build Arma3VR_x64.
-
-    The resulting Arma3VR_x64.dll will be written directly into the local @Arma3VR/ folder.
-
+The compiled Arma3VR_x64.dll will be written directly into the @Arma3VR/ folder.
 Packaging for Release
 
-When you are ready to prepare a build for others:
-
-    Pack @Arma3VR/addons/main/ into @Arma3VR/addons/main.pbo using your preferred PBO tool (such as Addon Builder, HEMTT, or PBO Manager).
+    Pack @Arma3VR/addons/main/ into @Arma3VR/addons/main.pbo using your preferred PBO tool (PBO Manager, Addon Builder, or HEMTT).
 
     Zip the entire @Arma3VR folder.
 
     Attach the zip to a new release on GitHub.
 
-License
+    License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+code Code
+
+That will format the headings properly and ensure only the actual terminal commands are inside the copyable boxes. Other than that, the repo is completely ready for release!
