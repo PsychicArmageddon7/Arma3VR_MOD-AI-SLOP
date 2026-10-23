@@ -5,10 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
-    message(FATAL_ERROR "Arma 3 VR must be compiled as a 64-bit extension (x64) for Arma 3 64-bit.")
+    message(FATAL_ERROR "Arma 3 VR must be compiled as a 64-bit extension (x64).")
 endif()
 
-# Source files
 set(SOURCES
     src/dllmain.cpp
     src/Extension/RVExtension.cpp
@@ -29,7 +28,6 @@ set(HEADERS
     include/VR/OpenXRContext.h
 )
 
-# Output target name matches Arma's 64-bit extension convention
 add_library(Arma3VR_x64 SHARED ${SOURCES} ${HEADERS})
 
 target_include_directories(Arma3VR_x64 PRIVATE 
@@ -44,25 +42,24 @@ target_compile_definitions(Arma3VR_x64 PRIVATE
     _UNICODE
 )
 
-# DirectX 11 and Windows API libraries
 target_link_libraries(Arma3VR_x64 PRIVATE
     d3d11
     dxgi
     d3dcompiler
 )
 
-# OpenXR Loader linkage
 find_package(OpenXR QUIET)
 if(OpenXR_FOUND)
     target_link_libraries(Arma3VR_x64 PRIVATE OpenXR::openxr_loader)
 else()
-    # Fallback to local SDK path or system lib if not using vcpkg
-    message(STATUS "Using default system/nuget openxr_loader.lib")
     target_link_libraries(Arma3VR_x64 PRIVATE openxr_loader)
 endif()
 
-# Set output name without standard 'lib' prefix
+# Output the compiled DLL directly into the @Arma3VR folder for immediate use
 set_target_properties(Arma3VR_x64 PROPERTIES
     PREFIX ""
     OUTPUT_NAME "Arma3VR_x64"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/@Arma3VR"
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_SOURCE_DIR}/@Arma3VR"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_SOURCE_DIR}/@Arma3VR"
 )
