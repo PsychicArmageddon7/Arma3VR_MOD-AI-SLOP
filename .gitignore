@@ -1,0 +1,32 @@
+# Visual Studio & MSBuild
+.vs/
+bin/
+obj/
+x64/
+x86/
+Debug/
+Release/
+*.user
+*.suo
+*.VC.db
+*.opendb
+*.vcxproj.user
+
+# CMake build directories
+build/
+out/
+CMakeSettings.json
+
+# Arma packaging outputs & logs
+dist/
+@Arma3VR/
+*.pbo
+*.rpt
+*.bidownload
+
+# Compiled binaries
+*.dll
+*.lib
+*.exp
+*.pdb
+*.ilk
