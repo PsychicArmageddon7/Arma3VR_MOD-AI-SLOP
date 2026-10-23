@@ -1,80 +1,140 @@
-# Arma 3 VR (OpenXR Native Mod)
+# Arma 3 VR (OpenXR)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![OpenXR](https://img.shields.io/badge/OpenXR-1.0-blue.svg)](https://www.khronos.org/openxr/)
-[![DirectX 11](https://img.shields.io/badge/DirectX-11-green.svg)](https://docs.microsoft.com/en-us/windows/win32/direct3d11/atpragma-intro)
+[![DirectX 11](https://img.shields.io/badge/DirectX-11-green.svg)](https://learn.microsoft.com/en-us/windows/win32/direct3d11/atpragma-intro)
 
-Native OpenXR Virtual Reality implementation for **Arma 3 (64-bit)**. 
+Native OpenXR Virtual Reality mod for **Arma 3 (64-bit)**.
 
-Hooks directly into Arma 3's DirectX 11 rendering pipeline to capture the active swapchain and scene depth buffer, passing real-time head rotation into the engine via a FreeTrack / TrackIR shared memory interface.
+This mod hooks directly into Arma 3's DirectX 11 graphics pipeline to capture the active render target and scene depth buffer, passing real-time head rotational tracking straight into the engine using an integrated FreeTrack / TrackIR shared memory interface.
 
 ---
 
-## Quick Start (For Players)
+## Installation & Setup (For Players)
 
-If you just want to play the mod without compiling anything:
+If you simply want to play without building anything from source:
 
-1. Download the latest **`Arma3VR.zip`** from the **[Releases](https://github.com/YourUsername/Arma3VR/releases)** tab.
-2. Extract the `@Arma3VR` folder directly into your Arma 3 game directory:
-   ```text
-   C:\Program Files (x86)\Steam\steamapps\common\Arma 3\@Arma3VR\
+1. Download the latest **`Arma3VR.zip`** from the **[Releases](../../releases)** tab.
+2. Extract the archive somewhere on your system (e.g., your game root or a dedicated mods directory) so that you have the **`@Arma3VR`** folder.
+3. Ensure your VR headset is connected and your runtime (**Meta Quest Link / AirLink**, **Virtual Desktop**, or **SteamVR**) is running.
+4. Launch the **Arma 3 Launcher**.
+5. Click on the **MODS** tab on the left.
+6. Click the **+ Local mod** button near the top of the launcher window.
+7. Browse to and select the extracted **`@Arma3VR`** folder.
+8. Locate **Arma 3 VR (OpenXR)** in your mod list and toggle the checkbox to **Enabled**.
+9. Launch the game, load into any mission or the Virtual Arsenal, and press **`Ctrl + V`** to activate VR mode.
 
-    Make sure your VR headset runtime (Meta Quest Link / AirLink, Virtual Desktop, or SteamVR) is active.
+---
 
-    Open the Arma 3 Launcher, go to MODS, and enable Arma 3 VR.
+## Default Controls
 
-    Launch the game and press Ctrl + V to activate VR mode.
+Keybindings can be customized in-game via **Options &rarr; Controls &rarr; Configure Addons &rarr; Arma 3 VR**.
 
-Default Controls
+| Action | Default Keybind | Description |
+| :--- | :--- | :--- |
+| **Toggle VR** | `Ctrl + V` | Starts or cleanly stops the VR session and tracking loop |
+| **Recenter** | `Numpad 5` | Re-centers head orientation to current view |
+| **Toggle 3D / 2D** | `Numpad 6` | Toggles between Stereoscopic 3D and Monoscopic mode |
+| **Separation (+)** | `Numpad +` | Increases 3D stereoscopic depth separation |
+| **Separation (-)** | `Numpad -` | Decreases 3D stereoscopic depth separation |
+| **Convergence (+)** | `Page Up` | Shifts the 3D focal convergence forward |
+| **Convergence (-)** | `Page Down` | Shifts the 3D focal convergence backward |
 
-Keybinds can be rebound in Options → Controls → Configure Addons → Arma 3 VR.
-Action	Default Keybind	Description
-Toggle VR	Ctrl + V	Starts or cleanly stops the VR render loop
-Recenter	Numpad 5	Re-centers head orientation
-Toggle 3D / 2D	Numpad 6	Switches between Stereoscopic 3D and Monoscopic mode
-Separation (+)	Numpad +	Increases 3D depth pop / stereo separation
-Separation (-)	Numpad -	Decreases 3D depth separation
-Convergence (+)	Page Up	Shifts the 3D focal plane forward
-Convergence (-)	Page Down	Shifts the 3D focal plane backward
-Repository Structure (For Modders & Developers)
-code Text
+---
 
+## Repository Structure (For Modders & Developers)
+
+```text
 Arma3VR/
-├── include/              # C++ headers
-├── src/                  # C++ source code (DirectX hook, OpenXR context, FreeTrack)
-├── @Arma3VR/             # Raw mod directory
+├── include/
+│   ├── Common.h
+│   ├── Extension/
+│   │   └── RVExtension.h
+│   ├── Graphics/
+│   │   ├── ArmaGraphics.h
+│   │   ├── DepthCaptureHook.h
+│   │   └── StereoPipeline.h
+│   ├── Tracking/
+│   │   └── FreeTrackProvider.h
+│   └── VR/
+│       └── OpenXRContext.h
+├── src/
+│   ├── dllmain.cpp
+│   ├── Extension/
+│   │   └── RVExtension.cpp
+│   ├── Graphics/
+│   │   ├── ArmaGraphics.cpp
+│   │   ├── DepthCaptureHook.cpp
+│   │   └── StereoPipeline.cpp
+│   ├── Tracking/
+│   │   └── FreeTrackProvider.cpp
+│   └── VR/
+│       └── OpenXRContext.cpp
+├── @Arma3VR/
 │   ├── mod.cpp
 │   ├── openxr_loader.dll
 │   └── addons/
-│       └── main/         # Unpacked SQF scripts and config.cpp
-├── CMakeLists.txt        # CMake build file
-├── build.ps1             # Local PowerShell compilation script
+│       └── main/
+│           ├── $PBOPREFIX$
+│           ├── config.cpp
+│           └── functions/
+│               ├── fn_adjustConvergence.sqf
+│               ├── fn_adjustSeparation.sqf
+│               ├── fn_recenter.sqf
+│               ├── fn_startVR.sqf
+│               ├── fn_stopVR.sqf
+│               ├── fn_toggleMode.sqf
+│               └── fn_toggleVR.sqf
+├── .gitignore
+├── CMakeLists.txt
+├── build.ps1
+├── LICENSE
 └── README.md
 
-Developing Locally
+Building & Modifying from Source
+Prerequisites
 
-    Building the DLL:
-    Open the repository folder in Visual Studio 2022 (as a CMake project) or run:
+    Visual Studio 2022 (with Desktop development with C++)
+
+    CMake 3.20+
+
+    Arma 3 (64-bit)
+
+Building the Extension DLL
+
+    Clone this repository:
+    code Powershell
+
+    git clone https://github.com/YourUsername/Arma3VR.git
+    cd Arma3VR
+
+    Build via the provided PowerShell script:
     code Powershell
 
     .\build.ps1 -Configuration Release
 
-    The compiled Arma3VR_x64.dll will be output directly into @Arma3VR\.
+    Or open the folder directly in Visual Studio 2022 as a CMake project and build Arma3VR_x64.
 
-    Testing Changes in Arma 3:
-    You do not need to pack a PBO while developing. Launch Arma 3 with the -filePatching parameter enabled in the launcher. Arma will read the loose SQF files from @Arma3VR\addons\main\ immediately.
+    The resulting Arma3VR_x64.dll will be written directly into the local @Arma3VR/ folder.
 
-    Packaging for Release:
-    Pack @Arma3VR\addons\main\ into main.pbo using your preferred PBO tool (PBO Manager, Addon Builder, or HEMTT), zip the @Arma3VR directory, and attach it to a GitHub Release.
+In-Place Development (No Packing Required)
+
+You do not need to pack a .pbo file every time you make changes to SQF or configuration files while developing:
+
+    Enable the -filePatching parameter in the Arma 3 Launcher under Parameters → Advanced → Developer.
+
+    Add @Arma3VR as a local mod. Arma 3 will read the unpacked scripts directly from @Arma3VR/addons/main/.
+
+Packaging for Release
+
+When you are ready to prepare a build for others:
+
+    Pack @Arma3VR/addons/main/ into @Arma3VR/addons/main.pbo using your preferred PBO tool (such as Addon Builder, HEMTT, or PBO Manager).
+
+    Zip the entire @Arma3VR folder.
+
+    Attach the zip to a new release on GitHub.
 
 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-code Code
-
----
-
-### What to Keep in Git Going Forward
-* Keep your **`src/`**, **`include/`**, and **`CMakeLists.txt`**.
-* Keep **`@Arma3VR/mod.cpp`**, **`@Arma3VR/openxr_loader.dll`**, and **`@Arma3VR/addons/main/`** (the SQF source).
-* Whenever you release a new version, compile it locally, pack `main.pbo`, zip `@Arma3VR`, and drop it on the **Releases** tab.
