@@ -1,4 +1,4 @@
-# Visual Studio & MSBuild
+# Visual Studio / MSBuild
 .vs/
 bin/
 obj/
@@ -12,21 +12,22 @@ Release/
 *.opendb
 *.vcxproj.user
 
-# CMake build directories
+# CMake build folders
 build/
 out/
 CMakeSettings.json
 
-# Arma packaging outputs & logs
-dist/
-@Arma3VR/
+# Arma engine logs & packing outputs
 *.pbo
 *.rpt
 *.bidownload
 
-# Compiled binaries
+# Ignore all compiled DLLs by default
 *.dll
 *.lib
 *.exp
 *.pdb
 *.ilk
+
+# EXCEPT the required third-party OpenXR loader
+!@Arma3VR/openxr_loader.dll
