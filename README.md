@@ -117,14 +117,6 @@ Building the Extension DLL
 
     The resulting Arma3VR_x64.dll will be written directly into the local @Arma3VR/ folder.
 
-In-Place Development (No Packing Required)
-
-You do not need to pack a .pbo file every time you make changes to SQF or configuration files while developing:
-
-    Enable the -filePatching parameter in the Arma 3 Launcher under Parameters → Advanced → Developer.
-
-    Add @Arma3VR as a local mod. Arma 3 will read the unpacked scripts directly from @Arma3VR/addons/main/.
-
 Packaging for Release
 
 When you are ready to prepare a build for others:
