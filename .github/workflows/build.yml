@@ -1,4 +1,4 @@
-name: Build Extension
+name: Build and Package Mod
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main, master ]
 
 jobs:
-  build-windows:
+  build-and-package:
     runs-on: windows-latest
 
     steps:
@@ -27,12 +27,31 @@ jobs:
       run: |
         cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
 
-    - name: Build Release
+    - name: Compile Extension (Release)
       run: |
         cmake --build build --config Release
 
-    - name: Upload Mod Artifact
+    - name: Download Armake2 (PBO Builder)
+      shell: pwsh
+      run: |
+        Invoke-WebRequest -Uri "https://github.com/KoffeinFlummi/armake2/releases/download/v1.0.1/armake2-windows-x86_64.zip" -OutFile "armake2.zip"
+        Expand-Archive -Path "armake2.zip" -DestinationPath "armake2"
+
+    - name: Pack PBO & Assemble Release Mod
+      shell: pwsh
+      run: |
+        # Pack main folder into main.pbo
+        .\armake2\armake2.exe pack "@Arma3VR/addons/main" "@Arma3VR/addons/main.pbo"
+        
+        # Create ready-to-ship distribution folder (excluding raw source folder)
+        mkdir "dist/@Arma3VR/addons" -Force
+        copy "@Arma3VR/Arma3VR_x64.dll" "dist/@Arma3VR/"
+        copy "@Arma3VR/openxr_loader.dll" "dist/@Arma3VR/"
+        copy "@Arma3VR/mod.cpp" "dist/@Arma3VR/"
+        copy "@Arma3VR/addons/main.pbo" "dist/@Arma3VR/addons/"
+
+    - name: Upload Finished Mod (.zip)
       uses: actions/upload-artifact@v4
       with:
-        name: Arma3VR-Release
-        path: '@Arma3VR'
+        name: Arma3VR-PlugAndPlay
+        path: dist/@Arma3VR
