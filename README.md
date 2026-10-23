@@ -14,6 +14,7 @@ This mod hooks directly into Arma 3's DirectX 11 graphics pipeline to capture th
 
 If you simply want to play without building anything from source:
 
+### 1. Mod Setup
 1. Download the latest **`@Arma3VR.zip`** from the **[Releases](../../releases)** tab.
 2. Extract the archive somewhere on your system so that you have the **`@Arma3VR`** folder.
 3. Ensure your VR headset is connected and your runtime (**Meta Quest Link / AirLink**, **Virtual Desktop**, or **SteamVR**) is running.
@@ -22,7 +23,17 @@ If you simply want to play without building anything from source:
 6. Click the **+ Local mod** button near the top of the launcher window.
 7. Browse to and select the extracted **`@Arma3VR`** folder.
 8. Locate **Arma 3 VR (OpenXR)** in your mod list and toggle the checkbox to **Enabled**.
-9. Launch the game, load into any mission or the Virtual Arsenal, and press **`Ctrl + V`** to activate VR mode.
+9. Launch the game.
+
+### 2. Enabling Head Tracking in Game (Required Once)
+To allow the VR headset rotation to control your head in-game:
+1. In Arma 3, go to **Options &rarr; Controls &rarr; Controllers** tab.
+2. Under the controllers list, select **FreeTrack** and ensure it is set to **Enabled**.
+3. Load into any mission or the Virtual Arsenal, and press **`Ctrl + V`** to activate VR mode.
+
+> **Note (If "FreeTrack" is missing from the list):**  
+> If FreeTrack does not appear in your Controllers menu, Windows has not yet registered the FreeTrack protocol registry entries.  
+> To fix this permanently: Download and open [OpenTrack](https://github.com/opentrack/opentrack) once, set Output to *FreeTrack 2.0 Enhanced*, start it, and launch Arma 3 once. Once "FreeTrack" appears in Arma's Controllers list and is enabled, you can close and uninstall/ignore OpenTrack forever—the mod feeds all rotational telemetry natively from that point forward.
 
 ---
 
@@ -160,6 +171,9 @@ Your `@Arma3VR` folder is now complete and ready to use:
 2. Go to the **MODS** tab &rarr; click **+ Local mod**.
 3. Select the **`@Arma3VR`** folder from your repository (or copy it into your game root first).
 4. Enable **Arma 3 VR (OpenXR)** in the mod list and launch the game.
+
+*(If you are creating a release archive for others, simply zip the completed `@Arma3VR` folder and attach it to a GitHub Release).*
+
 ---
 
 ## License
