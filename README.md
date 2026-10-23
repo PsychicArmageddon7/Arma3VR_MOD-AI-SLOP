@@ -51,9 +51,9 @@ Arma3VR/
 │   ├── Extension/
 │   │   └── RVExtension.h
 │   ├── Graphics/
-│   │   ├── ArmaGraphics.h
-│   │   ├── DepthCaptureHook.h
-│   │   └── StereoPipeline.h
+│   ├── ArmaGraphics.h
+│   ├── DepthCaptureHook.h
+│   └── StereoPipeline.h
 │   ├── Tracking/
 │   │   └── FreeTrackProvider.h
 │   └── VR/
@@ -92,6 +92,8 @@ Arma3VR/
 └── README.md
 ```
 
+---
+
 ## Building from Source
 
 ### Prerequisites
@@ -105,27 +107,24 @@ Arma3VR/
 ```powershell
 git clone https://github.com/PsychicArmageddon7/Arma3VR_MOD-AI-SLOP.git
 cd Arma3VR_MOD-AI-SLOP
+```
 
-    Build via the PowerShell script:
-
-code Powershell
-
+2. Build via the PowerShell script:
+```powershell
 .\build.ps1 -Configuration Release
+```
+*(Or open the folder directly in Visual Studio 2022 as a CMake project and build `Arma3VR_x64`)*
 
-(Or open the folder directly in Visual Studio 2022 as a CMake project and build Arma3VR_x64)
+The compiled **`Arma3VR_x64.dll`** will be written directly into the **`@Arma3VR/`** folder.
 
-The compiled Arma3VR_x64.dll will be written directly into the @Arma3VR/ folder.
-Packaging for Release
+### Packaging for Release
 
-    Pack @Arma3VR/addons/main/ into @Arma3VR/addons/main.pbo using your preferred PBO tool (PBO Manager, Addon Builder, or HEMTT).
+1. Pack `@Arma3VR/addons/main/` into `@Arma3VR/addons/main.pbo` using your preferred PBO tool (PBO Manager, Addon Builder, or HEMTT).
+2. Zip the entire `@Arma3VR` folder.
+3. Attach the zip to a new release on GitHub.
 
-    Zip the entire @Arma3VR folder.
+---
 
-    Attach the zip to a new release on GitHub.
+## License
 
-    License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-code Code
-
-That will format the headings properly and ensure only the actual terminal commands are inside the copyable boxes. Other than that, the repo is completely ready for release!
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
