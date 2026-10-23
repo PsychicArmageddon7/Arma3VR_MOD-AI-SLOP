@@ -44,3 +44,103 @@ Keybinds are fully customizable in **Options &rarr; Controls &rarr; Configure Ad
 2. Extract the `@Arma3VR` folder into your Arma 3 game directory:
    ```text
    C:\Program Files (x86)\Steam\steamapps\common\Arma 3\@Arma3VR\
+
+    Ensure your VR headset is connected and your runtime (Meta Quest Link, SteamVR, or Virtual Desktop) is active.
+
+    Launch Arma 3 via the launcher, go to MODS, and check Arma 3 VR.
+
+    Once in-game or in the Virtual Arsenal, press Ctrl + V to activate VR.
+
+Architecture Overview
+code Text
+
++--------------------------------------------------------------------+
+|                             Arma 3                                 |
+|                                                                    |
+|  [ SQF Layer ] <--- EachFrame ---> [ RVExtension ("step") ]        |
+|         |                                  |                       |
+|         |                                  v                       |
+|  [ FreeTrack IPC ] <---- Pose ----- [ OpenXRContext ]              |
+|         |                                  |                       |
+|  [ D3D11 Engine ]                          | (Shared DXGI Surface) |
+|         |                                  v                       |
+|    OMSetRenderTargets Hook ------> [ StereoPipeline ]              |
+|    (Color + Scene Depth)           (HLSL Disparity Shader)         |
++--------------------------------------------|-----------------------+
+                                             v
+                                  [ OpenXR Swapchain ]
+                                             |
+                                     (HMD Display)
+
+    RVExtension.cpp: Exposes Arma's standard C-ABI extension interface, parsing control commands from SQF.
+
+    ArmaGraphics.cpp: Resolves engine memory pointers to get access to the primary ID3D11Device and ID3D11DeviceContext.
+
+    DepthCaptureHook.cpp: Hooks virtual table slot #33 (OMSetRenderTargets) to intercept the full-resolution scene depth stencil view while ignoring shadow maps.
+
+    StereoPipeline.cpp: Executes a screen-space depth-disparity pixel shader to generate distinct left and right eye images with custom separation and convergence.
+
+    FreeTrackProvider.cpp: Simulates a native TrackIR device in shared memory (FT_SharedMem) to feed rotational telemetry into Arma.
+
+Building from Source
+Prerequisites
+
+    Windows 10/11 64-bit
+
+    Visual Studio 2022 (with Desktop development with C++)
+
+    CMake 3.20 or newer
+
+    OpenXR SDK (or install via vcpkg: vcpkg install openxr-sdk-windows:x64-windows)
+
+Build Steps
+
+    Clone the repository:
+    code Bash
+
+    git clone https://github.com/YourUsername/Arma3VR.git
+    cd Arma3VR
+
+    Run the automated PowerShell build script:
+    code Powershell
+
+    .\build.ps1 -Configuration Release
+
+    The compiled mod and binaries will be staged into dist/@Arma3VR.
+
+Contributing
+
+Contributions are welcome! Please feel free to submit issues, feature requests, or pull requests.
+For major changes, please open an issue first to discuss what you would like to change.
+License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+code Code
+
+---
+
+### 5. `LICENSE` (MIT Standard)
+
+```text
+MIT License
+
+Copyright (c) 2026 Arma 3 VR Project Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
