@@ -47,17 +47,23 @@ Keybindings can be customized in-game via **Options &rarr; Controls &rarr; Confi
 ```text
 Arma3VR/
 ├── include/
+│   ├── openxr/
+│   │   ├── openxr.h
+│   │   ├── openxr_platform.h
+│   │   └── openxr_platform_defines.h
 │   ├── Common.h
 │   ├── Extension/
 │   │   └── RVExtension.h
 │   ├── Graphics/
-│   ├── ArmaGraphics.h
-│   ├── DepthCaptureHook.h
-│   └── StereoPipeline.h
+│   │   ├── ArmaGraphics.h
+│   │   ├── DepthCaptureHook.h
+│   │   └── StereoPipeline.h
 │   ├── Tracking/
 │   │   └── FreeTrackProvider.h
 │   └── VR/
 │       └── OpenXRContext.h
+├── lib/
+│   └── openxr_loader.lib
 ├── src/
 │   ├── dllmain.cpp
 │   ├── Extension/
@@ -97,31 +103,65 @@ Arma3VR/
 ## Building from Source
 
 ### Prerequisites
-* Visual Studio 2022 (with *Desktop development with C++*)
-* CMake 3.20+
-* Arma 3 (64-bit)
+* **Visual Studio 2022** (with *Desktop development with C++*)
+* **CMake 3.20+**
+* **Arma 3 (64-bit)**
+* Any PBO packing tool (such as PBO Manager, Addon Builder, or HEMTT)
 
-### Building the Extension DLL
+---
 
-1. Clone this repository:
+### Step 1: Clone the Repository
+
 ```powershell
 git clone https://github.com/PsychicArmageddon7/Arma3VR_MOD-AI-SLOP.git
 cd Arma3VR_MOD-AI-SLOP
 ```
 
-2. Build via the PowerShell script:
-```powershell
-.\build.ps1 -Configuration Release
-```
-*(Or open the folder directly in Visual Studio 2022 as a CMake project and build `Arma3VR_x64`)*
+---
 
-The compiled **`Arma3VR_x64.dll`** will be written directly into the **`@Arma3VR/`** folder.
+### Step 2: Build the Extension DLL
 
-### Packaging for Release
+Choose either method below:
 
-1. Pack `@Arma3VR/addons/main/` into `@Arma3VR/addons/main.pbo` using your preferred PBO tool (PBO Manager, Addon Builder, or HEMTT).
-2. Zip the entire `@Arma3VR` folder.
-3. Attach the zip to a new release on GitHub.
+* **Via Visual Studio 2022 (Recommended)**:  
+  Open the repository folder using **File &rarr; Open &rarr; Folder...**, select **`x64-Release`** in the top configuration dropdown, and press **`Ctrl + Shift + B`** (or **Build &rarr; Build All**).
+
+* **Via PowerShell Script**:  
+  Open PowerShell in the repository root and run:
+  ```powershell
+  .\build.ps1 -Configuration Release
+  ```
+
+Either method compiles the C++ extension and writes **`Arma3VR_x64.dll`** directly into the local **`@Arma3VR/`** directory.
+
+---
+
+### Step 3: Pack the Addon PBO (Required)
+
+Compiling only generates the DLL binary. Before Arma 3 can load the mod scripts in-game, you must package the addon:
+
+1. Using your preferred PBO tool, pack the folder:
+   ```text
+   @Arma3VR/addons/main/
+   ```
+   into:
+   ```text
+   @Arma3VR/addons/main.pbo
+   ```
+2. *(Optional)* Once `main.pbo` is created, you can safely delete the unpacked `main/` folder so that only `main.pbo` remains inside `addons/`.
+
+---
+
+### Step 4: Load into Arma 3
+
+Your `@Arma3VR` folder is now complete and ready to use:
+
+1. Launch the **Arma 3 Launcher**.
+2. Go to the **MODS** tab &rarr; click **+ Local mod**.
+3. Select the **`@Arma3VR`** folder from your repository (or copy it into your game root first).
+4. Enable **Arma 3 VR (OpenXR)** in the mod list and launch the game.
+
+*(If you are creating a release archive for others, simply zip the completed `@Arma3VR` folder and attach it to a GitHub Release).*
 
 ---
 
