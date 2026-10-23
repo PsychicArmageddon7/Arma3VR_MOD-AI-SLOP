@@ -36,26 +36,24 @@ target_include_directories(Arma3VR_x64 PRIVATE
 
 target_compile_definitions(Arma3VR_x64 PRIVATE 
     ARMA3VR_EXTENSION_EXPORTS
-    WIN32_LEAN_AND_MEAN
-    NOMINMAX
     UNICODE
     _UNICODE
 )
 
+# Tell the linker where to find openxr_loader.lib inside the repo
+target_link_directories(Arma3VR_x64 PRIVATE 
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib
+)
+
+# Link Windows graphics and OpenXR
 target_link_libraries(Arma3VR_x64 PRIVATE
     d3d11
     dxgi
     d3dcompiler
+    openxr_loader
 )
 
-find_package(OpenXR QUIET)
-if(OpenXR_FOUND)
-    target_link_libraries(Arma3VR_x64 PRIVATE OpenXR::openxr_loader)
-else()
-    target_link_libraries(Arma3VR_x64 PRIVATE openxr_loader)
-endif()
-
-# Output the compiled DLL directly into the @Arma3VR folder for immediate use
+# Output compiled DLL directly into @Arma3VR
 set_target_properties(Arma3VR_x64 PROPERTIES
     PREFIX ""
     OUTPUT_NAME "Arma3VR_x64"
