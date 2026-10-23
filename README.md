@@ -14,8 +14,8 @@ This mod hooks directly into Arma 3's DirectX 11 graphics pipeline to capture th
 
 If you simply want to play without building anything from source:
 
-1. Download the latest **`Arma3VR.zip`** from the **[Releases](../../releases)** tab.
-2. Extract the archive somewhere on your system (e.g., your game root or a dedicated mods directory) so that you have the **`@Arma3VR`** folder.
+1. Download the latest **`@Arma3VR.zip`** from the **[Releases](../../releases)** tab.
+2. Extract the archive somewhere on your system so that you have the **`@Arma3VR`** folder.
 3. Ensure your VR headset is connected and your runtime (**Meta Quest Link / AirLink**, **Virtual Desktop**, or **SteamVR**) is running.
 4. Launch the **Arma 3 Launcher**.
 5. Click on the **MODS** tab on the left.
@@ -105,8 +105,8 @@ Building the Extension DLL
     Clone this repository:
     code Powershell
 
-    git clone https://github.com/YourUsername/Arma3VR.git
-    cd Arma3VR
+    git clone https://github.com/PsychicArmageddon7/Arma3VR_MOD-AI-SLOP.git
+    cd Arma3VR_MOD-AI-SLOP
 
     Build via the provided PowerShell script:
     code Powershell
