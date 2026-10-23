@@ -52,25 +52,6 @@ Keybinds are fully customizable in **Options &rarr; Controls &rarr; Configure Ad
     Once in-game or in the Virtual Arsenal, press Ctrl + V to activate VR.
 
 Architecture Overview
-code Text
-
-+--------------------------------------------------------------------+
-|                             Arma 3                                 |
-|                                                                    |
-|  [ SQF Layer ] <--- EachFrame ---> [ RVExtension ("step") ]        |
-|         |                                  |                       |
-|         |                                  v                       |
-|  [ FreeTrack IPC ] <---- Pose ----- [ OpenXRContext ]              |
-|         |                                  |                       |
-|  [ D3D11 Engine ]                          | (Shared DXGI Surface) |
-|         |                                  v                       |
-|    OMSetRenderTargets Hook ------> [ StereoPipeline ]              |
-|    (Color + Scene Depth)           (HLSL Disparity Shader)         |
-+--------------------------------------------|-----------------------+
-                                             v
-                                  [ OpenXR Swapchain ]
-                                             |
-                                     (HMD Display)
 
     RVExtension.cpp: Exposes Arma's standard C-ABI extension interface, parsing control commands from SQF.
 
