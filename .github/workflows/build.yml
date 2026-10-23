@@ -1,0 +1,45 @@
+name: Build Extension
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup MSVC Environment
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
+
+    - name: Setup vcpkg and OpenXR
+      run: |
+        vcpkg install openxr-sdk-windows:x64-windows
+
+    - name: Configure CMake
+      run: |
+        cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+
+    - name: Build Release
+      run: |
+        cmake --build build --config Release
+
+    - name: Package Release Mod Artifact
+      run: |
+        mkdir dist\@Arma3VR\addons\main -Force
+        copy build\Release\Arma3VR_x64.dll dist\@Arma3VR\
+        copy mod.cpp dist\@Arma3VR\
+        copy addons\main\* dist\@Arma3VR\addons\main\ -Recurse
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Arma3VR-x64-Release
+        path: dist/@Arma3VR
