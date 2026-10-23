@@ -90,7 +90,7 @@ Arma3VR/
 ├── build.ps1
 ├── LICENSE
 └── README.md
-
+```
 Building & Modifying from Source
 Prerequisites
 
