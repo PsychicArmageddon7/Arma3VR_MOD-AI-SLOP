@@ -33,7 +33,7 @@ To allow the VR headset rotation to control your head in-game:
 
 > **Note (If "FreeTrack" is missing from the list):**  
 > If FreeTrack does not appear in your Controllers menu, Windows has not yet registered the FreeTrack protocol registry entries.  
-> To fix this permanently: Download and open [OpenTrack](https://github.com/opentrack/opentrack) once, set Output to *FreeTrack 2.0 Enhanced*, start it, and launch Arma 3 once. Once "FreeTrack" appears in Arma's Controllers list and is enabled, you can close and uninstall/ignore OpenTrack forever—the mod feeds all rotational telemetry natively from that point forward.
+> To fix this permanently: Download and open [OpenTrack](https://github.com/opentrack/opentrack) once, set Output to *FreeTrack 2.0 Enhanced*, start it, and launch Arma 3 once. Once "FreeTrack" appears in Arma's Controllers list and is enabled, you can close and ignore OpenTrack—the mod feeds all rotational telemetry natively from that point forward.
 
 ---
 
@@ -163,7 +163,7 @@ Compiling only generates the DLL binary. Before Arma 3 can load the mod scripts 
 
 ---
 
-### Step 4: Load into Arma 3
+### Step 4: Load into Arma 3 & Enable Head Tracking
 
 Your `@Arma3VR` folder is now complete and ready to use:
 
@@ -171,8 +171,13 @@ Your `@Arma3VR` folder is now complete and ready to use:
 2. Go to the **MODS** tab &rarr; click **+ Local mod**.
 3. Select the **`@Arma3VR`** folder from your repository (or copy it into your game root first).
 4. Enable **Arma 3 VR (OpenXR)** in the mod list and launch the game.
+5. In Arma 3, go to **Options &rarr; Controls &rarr; Controllers** tab.
+6. Under the controllers list, select **FreeTrack** and ensure it is set to **Enabled**.
+7. Load into any mission or the Virtual Arsenal, and press **`Ctrl + V`** to activate VR mode.
 
-*(If you are creating a release archive for others, simply zip the completed `@Arma3VR` folder and attach it to a GitHub Release).*
+> **Note (If "FreeTrack" is missing from the list):**  
+> If FreeTrack does not appear in your Controllers menu, Windows has not yet registered the FreeTrack protocol registry entries.  
+> To fix this permanently: Download and open [OpenTrack](https://github.com/opentrack/opentrack) once, set Output to *FreeTrack 2.0 Enhanced*, start it, and launch Arma 3 once. Once "FreeTrack" appears in Arma's Controllers list and is enabled, you can close and ignore OpenTrack—the mod feeds all rotational telemetry natively from that point forward.
 
 ---
 
