@@ -126,7 +126,6 @@ Arma3VR/
 
 ```powershell
 git clone https://github.com/PsychicArmageddon7/Arma3VR_MOD-AI-SLOP.git
-cd Arma3VR_MOD-AI-SLOP
 ```
 
 ---
