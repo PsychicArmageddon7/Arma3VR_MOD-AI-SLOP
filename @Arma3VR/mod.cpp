@@ -1,0 +1,10 @@
+name = "Arma 3 VR (OpenXR)";
+picture = "";
+logoSmall = "";
+logo = "";
+logoOver = "";
+action = "https://github.com";
+tooltipOwned = "Arma 3 VR";
+overview = "Native stereoscopic and monoscopic OpenXR VR implementation for Arma 3.";
+hideName = 0;
+hidePicture = 0;
