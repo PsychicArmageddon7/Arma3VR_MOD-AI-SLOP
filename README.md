@@ -89,14 +89,6 @@ Build Steps
 
     The compiled mod and binaries will be staged into dist/@Arma3VR.
 
-Contributing
-
-Contributions are welcome! Please feel free to submit issues, feature requests, or pull requests.
-For major changes, please open an issue first to discuss what you would like to change.
-License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-code Code
 
 ---
 
